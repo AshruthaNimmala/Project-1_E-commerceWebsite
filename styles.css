@@ -1,0 +1,143 @@
+body,
+h1,
+h2,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Basic styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url("MAINBG.png") no-repeat center center fixed;
+  /* Added fixed positioning */
+  background-size: cover;
+  /* Maintain aspect ratio and cover the entire screen */
+  color: #333;
+}
+
+/* Header styling */
+header {
+  background-color: rgba(76, 175, 80, 0.9);
+  /* Added opacity to show the background through */
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+header h1 {
+  margin-bottom: 0.5rem;
+  color: #121111;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 0.5rem;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+nav ul li a:hover {
+  background-color: #45a049;
+}
+
+.small-image-container1 {
+  position: absolute;
+  /* Position the small image absolutely */
+  top: 200px;
+  /* Adjust the top position as needed */
+  left: 10px;
+  /*border: solid black 2px; /* Adjust the left position as needed */
+  object-fit: cover;
+}
+
+.small-image-container1 img {
+  width: 315px;
+  /* Adjust the size of the small image */
+  height: 350px;
+  /* Maintain aspect ratio */
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+/* Main content styling */
+main {
+  padding: 2rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Set a semi-transparent background */
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+main h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+main p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  text-align: left;
+}
+
+/* Footer styling */
+footer {
+  background-color: rgba(51, 51, 51, 0.9);
+  /* Added opacity to show the background through */
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  nav ul {
+    text-align: center;
+    padding-top: 1rem;
+  }
+
+  nav ul li {
+    display: block;
+    margin: 0.5rem 0;
+  }
+
+  main {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  main h2 {
+    font-size: 1.8rem;
+  }
+
+  main p {
+    font-size: 1rem;
+  }
+}

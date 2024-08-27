@@ -1,0 +1,165 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: url("bg1.jpg") no-repeat center center fixed;
+  /* Fixed positioning for background */
+  background-size: cover;
+  /* Ensure the background covers the entire area */
+}
+
+/* Header styling consistent with index.css */
+header {
+  background-color: rgba(76, 175, 80, 0.9);
+  /* Added opacity for consistency */
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+header h1 {
+  margin-bottom: 0.5rem;
+  color: #121111;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+  /* Centered navigation to match index.css */
+}
+
+nav ul li {
+  display: inline-block;
+  /* Ensures items are inline */
+  margin: 0 0.5rem;
+  /* Consistent margin */
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+nav ul li a:hover {
+  background-color: #45a049;
+  /* Same hover effect as index.css */
+}
+
+/* Main content styling consistent with index.css */
+main {
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Semi-transparent background */
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+main p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Section styling */
+section {
+  padding: 2rem;
+  background-color: rgba(249, 249, 249, 0.9);
+  /* Light background with slight transparency */
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+section h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+section p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.small-image-container {
+  position: absolute;
+  /* Position the small image absolutely */
+  top: 250px;
+  /* Adjust the top position as needed */
+  left: 30px;
+  /* Adjust the left position as needed */
+}
+
+.small-image-container img {
+  width: 300px;
+  /* Adjust the size of the small image */
+  height: auto;
+  border-radius: 50%;
+  border: #d47810 solid;
+  /* Maintain aspect ratio */
+}
+
+/* Footer styling consistent with index.css */
+footer {
+  background-color: rgba(51, 51, 51, 0.9);
+  /* Added opacity for consistency */
+  padding: 1rem 0;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  nav ul {
+    text-align: center;
+  }
+
+  nav ul li {
+    display: block;
+    margin: 0.5rem 0;
+  }
+
+  main {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  section {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  main p,
+  section p {
+    font-size: 1rem;
+  }
+}
