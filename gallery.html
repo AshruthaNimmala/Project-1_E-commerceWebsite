@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider | Guardian Ride for SHE</title>
+    <link rel="stylesheet" href="gallery.css"> <!-- Link to the updated CSS file -->
+</head>
+<body>
+    <header>
+        <h1>Guardian Ride for SHE</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about us.html">About Us</a></li>
+                <li><a href="contact us.html">Contact Us</a></li>
+                <li><a href="helpline.html">Help Line</a></li>
+                <li><a href="routing.html">Routing Maps</a></li>
+                <li><a href="realtimeLocation.html">Location tracker</a></li>
+                <li><a href="gallery.html"> Gallery</a></li>
+                <button class="btn1" onclick="logout()">Logout</button>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="slide-container">
+            <div class="slides">
+                <img src="child-in-car.jpeg" class="active"> 
+                <img src="booking-safely.jpg">
+                <!--<img src="bus-stop.jpg">-->
+                <img src="taxi-driver.jpeg">
+                <img src="girl-child.jpg">
+                <video id="slide-video"  controls>
+                    <source src="vid1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="buttons">
+                <span class="next">&#10095;</span>
+                <span class="prev">&#10094;</span>
+            </div>
+            <div class="dotsContainer">
+                <div class="dot active" attr='0' onclick="switchImage(this)"></div>
+                <div class="dot" attr='1' onclick="switchImage(this)"></div>
+                <div class="dot" attr='2' onclick="switchImage(this)"></div>
+                <div class="dot" attr='3' onclick="switchImage(this)"></div>
+                <div class="dot" attr='4' onclick="switchImage(this)"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Guardian Ride for SHE. All rights reserved.</p>
+    </footer>
+
+    <script src="gallery.js"></script> <!-- Link to your existing JavaScript -->
+</body>
+</html>

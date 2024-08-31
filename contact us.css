@@ -9,7 +9,7 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   color: #333;
-  background-color: #f4f4f4;
+  background-color: #f2c88a;
 }
 
 header {
@@ -81,7 +81,7 @@ input[type="email"],
 textarea {
   padding: 0.5rem;
 
-  border: 1px solid #ddd;
+  border: 1px solid #e47f7f;
   border-radius: 4px;
   width: 100%;
   font-size: 1rem;
@@ -104,7 +104,16 @@ button {
 button:hover {
   background-color: #45a049;
 }
-
+.btn1 {
+  background-color: #e53935; /* A vibrant color to make it stand out */
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
 footer {
   background-color: #333;
   padding: 1rem 0;

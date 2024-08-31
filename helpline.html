@@ -12,12 +12,14 @@
       <h1>Guardian Ride for SHE</h1>
       <nav>
         <ul>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="home.html">Home</a></li>
           <li><a href="about us.html">About Us</a></li>
-          <li><a href="registration.html">Register</a></li>
-          <li><a href="login.html">Login</a></li>
           <li><a href="contact us.html">Contact Us</a></li>
           <li><a href="helpline.html">Help Line</a></li>
+          <li><a href="routing.html">Routing Maps</a></li>
+          <li><a href="realtimeLocation.html">Location tracker</a></li>
+                <li><a href="gallery.html"> Gallery</a></li>
+          <button class="btn1" onclick="logout()">Logout</button>
         </ul>
       </nav>
     </header>
@@ -69,5 +71,16 @@
         </tr>
       </table>
     </div>
+    <script>
+      function logout() {
+        localStorage.setItem("isLoggedIn", "false");
+        window.location.href = "index.html";
+      }
+
+      // Prevent access to dashboard if not logged in
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "index.html";
+      }
+    </script>
   </body>
 </html>

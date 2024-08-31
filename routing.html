@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map" style="width: 100%; height: 100vh"></div>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script>
+      // Initialize the map
+        // Prevent access to dashboard if not logged in
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "index.html";
+  }
+      var map = L.map('map').setView([28.238, 83.9956], 11);
+
+      // Add tile layer
+      L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      // Initialize variables for routing and markers
+      var currentLocationMarker;
+      var routingControl;
+      var destinationMarker;
+
+      // Handle location found event
+      map.on('locationfound', function(e) {
+          // Remove previous location marker if it exists
+          if (currentLocationMarker) {
+              map.removeLayer(currentLocationMarker);
+          }
+
+          // Add a marker for the user's current location
+          currentLocationMarker = L.marker(e.latlng).addTo(map)
+              .bindPopup('You are here')
+              .openPopup();
+
+          // Center map on current location
+          map.setView(e.latlng, 13);
+
+          // Draw route if there's a destination selected
+          if (routingControl && destinationMarker) {
+              routingControl.setWaypoints([
+                  L.latLng(e.latlng.lat, e.latlng.lng),
+                  L.latLng(destinationMarker.getLatLng())
+              ]);
+          }
+      });
+
+      // Handle location error event
+      map.on('locationerror', function() {
+          alert("Unable to retrieve your location.");
+      });
+
+      // Request the user's current location
+      map.locate({ setView: true, maxZoom: 16 });
+
+      // Handle map clicks to select the destination
+      map.on('click', function(e) {
+          // Remove previous destination marker if it exists
+          if (destinationMarker) {
+              map.removeLayer(destinationMarker);
+          }
+
+          // Add a marker for the new destination
+          destinationMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+
+          // Add or update the routing control
+          if (routingControl) {
+              routingControl.setWaypoints([
+                  L.latLng(currentLocationMarker.getLatLng()),
+                  L.latLng(e.latlng.lat, e.latlng.lng)
+              ]);
+          } else {
+              routingControl = L.Routing.control({
+                  waypoints: [
+                      L.latLng(currentLocationMarker.getLatLng()),
+                      L.latLng(e.latlng.lat, e.latlng.lng)
+                  ],
+                
+                  routeWhileDragging: true
+              }).addTo(map);
+          }
+      });
+  </script>
+  </body>
+</html>

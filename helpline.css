@@ -4,7 +4,16 @@ body {
   margin: 0;
   padding: 0;
 }
-
+.btn1 {
+  background-color: #e53935; /* A vibrant color to make it stand out */
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
 .container {
   max-width: 800px;
   margin: 50px auto;

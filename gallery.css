@@ -1,0 +1,191 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Body Styling */
+body {
+  background-color: #f2c88a;
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header and Navbar Styling */
+header {
+  background-color: rgba(76, 175, 80, 0.9); /* Match the background color and opacity with about.css */
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #121111; /* Align the text color with about.css */
+}
+
+nav {
+  margin-top: 1rem;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: #45a049; /* Match the hover effect with about.css */
+  border-radius: 4px;
+}
+
+button.btn1 {
+  background-color: #e53935; /* Align with the button styling in about.css */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin-left: 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button.btn1:hover {
+  background-color: #ff4a3d; /* Adjust the hover color to match the theme */
+}
+
+/* Slide-container Styling */
+.slide-container {
+  position: relative;
+  width: 80%;
+  max-width: 900px;
+  height: 450px;
+  margin: 2rem auto;
+  border: 3px solid #ede6d6;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
+}
+.slides video {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  display: none; /* Hide by default */
+  position: absolute;
+}
+
+/* Slide images styling */
+.slides img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+}
+
+/* Navigation button styling */
+span.next, span.prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 14px;
+  color: #eee;
+  font-size: 24px;
+  font-weight: bold;
+  transition: 0.5s;
+  border-radius: 3px;
+  user-select: none;
+  cursor: pointer;
+  z-index: 1;
+}
+
+span.next {
+  right: 10px;
+}
+
+span.prev {
+  left: 10px;
+}
+
+span.next:hover, span.prev:hover {
+  background-color: #ede6d6;
+  opacity: 0.8;
+  color: #222;
+}
+
+/* Dots styling */
+.dotsContainer {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.dotsContainer .dot {
+  width: 15px;
+  height: 15px;
+  margin: 0 2px;
+  border: 3px solid #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.6s ease;
+}
+
+.dotsContainer .dot.active {
+  background-color: #555;
+}
+
+/* Main Content Styling */
+main {
+  flex: 1;
+  padding: 2rem;
+  width: 100%;
+}
+
+/* Footer Styling */
+footer {
+  background-color: rgba(51, 51, 51, 0.9); /* Match the background color and opacity with about.css */
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
+    margin-bottom: 10px;
+  }
+
+  .slide-container {
+    width: 90%;
+    height: 300px;
+  }
+}

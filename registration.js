@@ -28,8 +28,15 @@ function handleFormSubmit(event) {
     }
 
     // If validation passes, show a success message
-    alert('Registration successful!');
+    
+    // Store credentials in Local Storage
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
 
+    alert('Registration successful! You can now login.');
+
+    // Redirect to login page
+    window.location.href = 'index.html';
     // Optionally, you can reset the form or redirect the user
     // document.getElementById('registrationForm').reset();
     // window.location.href = 'success.html'; // Redirect to a success page

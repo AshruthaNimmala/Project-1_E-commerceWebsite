@@ -132,6 +132,17 @@ footer {
 footer p {
   margin: 0;
 }
+/* Logout button styling */
+.btn1 {
+  background-color: #e53935; /* A vibrant color to make it stand out */
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
 
 /* Responsive design adjustments */
 @media (max-width: 768px) {

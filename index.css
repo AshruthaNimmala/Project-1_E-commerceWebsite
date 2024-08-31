@@ -1,0 +1,114 @@
+body,
+h1,
+h2,
+p,
+label,
+input,
+button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Basic styling */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f2c88a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styling */
+header {
+  background-color: #4caf50;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+header h1 {
+  margin-bottom: 0.5rem;
+}
+
+/* Main content styling */
+main {
+  padding: 2rem;
+  max-width: 500px; /* Adjusted width */
+  width: 90%; /* Ensures it takes 90% of the available space */
+  margin: 2rem auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  min-height: 300px; /* Ensure a minimum height for better alignment */
+}
+
+main h2 {
+  color: #333;
+  margin: 1rem 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  font-weight: bold;
+  text-align: left;
+}
+
+input[type="email"],
+input[type="password"] {
+  padding: 0.5rem;
+  border: 1px solid #e47f7f;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.login-link {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Footer styling */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  main {
+    padding: 1rem;
+    margin: 1rem;
+    width: 100%; /* Adjusts width for mobile */
+    min-height: auto; /* Remove minimum height for smaller screens */
+  }
+}
