@@ -1,106 +1,188 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Geolocation</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"
-    />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Search and Routing</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css">
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        
+        #bookRideButton {
+            position: absolute;
+            top: 225px;
+            left: 11px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            z-index: 1000; /* Ensure button is above the map */
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+        }
+        #bookRideButton:hover {
+            background-color: #45a049;
+        }
     </style>
-  </head>
+</head>
+<body>
+    <div id="map"></div>
+    <!-- Book Free Ride Button -->
+    <button id="bookRideButton">Book Free Ride</button>
 
-  <body>
-    <div id="map" style="width: 100%; height: 100vh"></div>
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.81.1/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.81.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <script>
-      // Initialize the map
         // Prevent access to dashboard if not logged in
-  if (localStorage.getItem("isLoggedIn") !== "true") {
-    window.location.href = "index.html";
-  }
-      var map = L.map('map').setView([28.238, 83.9956], 11);
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.href = "index.html";
+        }
 
-      // Add tile layer
-      L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
+        var map = L.map('map').setView([17.45076007588634, 78.35478355348484], 13);
 
-      // Initialize variables for routing and markers
-      var currentLocationMarker;
-      var routingControl;
-      var destinationMarker;
+        // Add OSM tile layer
+        var osm = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png');
+        var osm2 = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+        });
+        osm.addTo(map);
+        var baseMaps = {
+            "OpenStreetMap": osm,
+            "Google": osm2
+        };
+        var layerControl = L.control.layers(baseMaps).addTo(map);
 
-      // Handle location found event
-      map.on('locationfound', function(e) {
-          // Remove previous location marker if it exists
-          if (currentLocationMarker) {
-              map.removeLayer(currentLocationMarker);
-          }
+        var locateControl = L.control.locate({
+            strings: {
+                title: "Your Current Location"
+            }
+        }).addTo(map);
 
-          // Add a marker for the user's current location
-          currentLocationMarker = L.marker(e.latlng).addTo(map)
-              .bindPopup('You are here')
-              .openPopup();
+        // Initialize variables
+        var fromLocationMarker, toLocationMarker, routingControl;
 
-          // Center map on current location
-          map.setView(e.latlng, 13);
+        // Geoapify Address Search API Key
+        var myAPIKey = "d797ff206eda4d1a804ab31d002f0f41"; // REPLACE WITH YOUR API-KEY. This key might go away any time!
 
-          // Draw route if there's a destination selected
-          if (routingControl && destinationMarker) {
-              routingControl.setWaypoints([
-                  L.latLng(e.latlng.lat, e.latlng.lng),
-                  L.latLng(destinationMarker.getLatLng())
-              ]);
-          }
-      });
+        // Create the "From" location search control
+        const fromAddressSearchControl = L.control.addressSearch(myAPIKey, {
+            position: 'topleft',
+            placeholder: 'From location',
+            mapViewBias: true,
+            resultCallback: (address) => {
+                if (address && address.lat && address.lon) {
+                    var latLng = L.latLng(address.lat, address.lon);
+                    console.log("From location latlng: ", latLng);
 
-      // Handle location error event
-      map.on('locationerror', function() {
-          alert("Unable to retrieve your location.");
-      });
+                    // Remove previous "From" location marker if it exists
+                    if (fromLocationMarker) {
+                        map.removeLayer(fromLocationMarker);
+                    }
 
-      // Request the user's current location
-      map.locate({ setView: true, maxZoom: 16 });
+                    // Add marker for "From" location
+                    fromLocationMarker = L.marker(latLng).addTo(map)
+                        .bindPopup('From: ' + address.formatted)
+                        .openPopup();
 
-      // Handle map clicks to select the destination
-      map.on('click', function(e) {
-          // Remove previous destination marker if it exists
-          if (destinationMarker) {
-              map.removeLayer(destinationMarker);
-          }
+                    // Update routing if both locations are selected
+                    if (toLocationMarker) {
+                        updateRouting();
+                    }
+                }
+            },
+        }).addTo(map);
 
-          // Add a marker for the new destination
-          destinationMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+        // Create the "To" location search control
+        const toAddressSearchControl = L.control.addressSearch(myAPIKey, {
+            position: 'topleft',
+            placeholder: 'To location',
+            mapViewBias: true,
+            resultCallback: (address) => {
+                if (address && address.lat && address.lon) {
+                    var latLng = L.latLng(address.lat, address.lon);
+                    console.log("To location latlng: ", latLng);
 
-          // Add or update the routing control
-          if (routingControl) {
-              routingControl.setWaypoints([
-                  L.latLng(currentLocationMarker.getLatLng()),
-                  L.latLng(e.latlng.lat, e.latlng.lng)
-              ]);
-          } else {
-              routingControl = L.Routing.control({
-                  waypoints: [
-                      L.latLng(currentLocationMarker.getLatLng()),
-                      L.latLng(e.latlng.lat, e.latlng.lng)
-                  ],
-                
-                  routeWhileDragging: true
-              }).addTo(map);
-          }
-      });
-  </script>
-  </body>
+                    // Remove previous "To" location marker if it exists
+                    if (toLocationMarker) {
+                        map.removeLayer(toLocationMarker);
+                    }
+
+                    // Add marker for "To" location
+                    toLocationMarker = L.marker(latLng).addTo(map)
+                        .bindPopup('To: ' + address.formatted)
+                        .openPopup();
+
+                    // Update routing if both locations are selected
+                    if (fromLocationMarker) {
+                        updateRouting();
+                    }
+                }
+            },
+        }).addTo(map);
+
+        // Function to update routing based on selected "From" and "To" locations
+        function updateRouting() {
+            if (routingControl) {
+                map.removeControl(routingControl);
+            }
+            routingControl = L.Routing.control({
+                waypoints: [
+                    L.latLng(fromLocationMarker.getLatLng()),
+                    L.latLng(toLocationMarker.getLatLng())
+                ],
+                routeWhileDragging: true
+            }).addTo(map);
+        }
+
+        // Handle map clicks for manual selection
+        map.on('click', function (e) {
+            if (!fromLocationMarker) {
+                fromLocationMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map)
+                    .bindPopup('From location')
+                    .openPopup();
+            } else if (!toLocationMarker) {
+                toLocationMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map)
+                    .bindPopup('To location')
+                    .openPopup();
+
+                updateRouting();
+            } else {
+                map.removeLayer(fromLocationMarker);
+                map.removeLayer(toLocationMarker);
+                fromLocationMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map)
+                    .bindPopup('From location')
+                    .openPopup();
+                toLocationMarker = null;
+                routingControl && map.removeControl(routingControl);
+            }
+        });
+
+        // Book Free Ride Button Click Event
+        document.getElementById('bookRideButton').addEventListener('click', function () {
+            if (fromLocationMarker && toLocationMarker) {
+                alert("Ride booked successfully!");
+            } else {
+                alert("Please select both 'From' and 'To' locations before booking a ride.");
+            }
+        });
+
+    </script>
+</body>
 </html>
